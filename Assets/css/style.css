@@ -1,0 +1,40 @@
+body{
+    background-color: black;
+}
+.search-column{
+    background-color: black;
+    color: white;
+}
+
+.row.border.selected-city{
+    color:white
+}
+
+.row.border.fiveday-forecast{
+    color:white
+}
+
+.past-search.border{
+    background-color: navy;
+    color: white
+}
+
+.list-group {
+    background-color: navy;
+    color: white;
+}
+
+
+.list-group-item {
+    line-height: 0.75;
+    border: none;
+}
+
+.card-header{
+    background-color: blueviolet;
+}
+
+.card-body {
+    flex:auto;
+    background-color: navy;
+}

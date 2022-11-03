@@ -5,7 +5,7 @@ var currentForecastEl = document.getElementById("current-forecast");
 var searchedInputEl = document.getElementById("searched-city");
 var weatherContainerEl = document.getElementById("weather-container");
 var forecastHeaderEl = document.getElementById("forecast-title");
-var forecastContainerEl = document.getElementById("fiveday-container");
+var forecastContainerEl = document.querySelector("#fiveday-container");
 var cities = [];
 
 var formSubmission = function (event) {
@@ -86,7 +86,7 @@ var currentForecast = function (weather, searchCity) {
 
 var fiveDayForecast = function(city) {
   var apiKey = "a3ea51331f76c8184ea6d14f912424e8";
-  var apiURL = `api.openweathermap.org/data/2.5/forecast?q=${city}&units=imperial&appid=${apiKey}`;
+  var apiURL = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=imperial&appid=${apiKey}`;
 
   fetch(apiURL).then(function (response) {
     response.json().then(function (data) {
@@ -98,19 +98,20 @@ var fiveDayForecast = function(city) {
 //--Function to display 5-day forecast--
 var displayForecast = function (weather) {
   forecastContainerEl.textContent = "";
-  forecastHeaderEl.textContent = "5 Day Forecast";
+  forecastHeaderEl.textContent = "5 Day Forecast: ";
 
   var forecast = weather.list;
-  for (var i = 0; i < forecast.length; i += 8) {
+  for (var i = 5; i < forecast.length; i = i + 8) {
     var dailyForecast = forecast[i];
 
     var forecastEl = document.createElement("div");
-    forecastEl.classList = "card bg-primary text-light d-flex";
+    forecastEl.classList = "card bg-info text-light m-2";
 
     //--Displaying date--
     var dateEl = document.createElement("h5");
     dateEl.textContent = moment.unix(dailyForecast.dt).format("MMM D, YYYY");
     dateEl.classList = "card-header text-center";
+    forecastEl.appendChild(dateEl);
 
     //--Displaying weather image--
     var weatherIconEl = document.createElement("img");
@@ -119,28 +120,24 @@ var displayForecast = function (weather) {
       "src",
       `https://openweathermap.org/img/wn/${dailyForecast.weather[0].icon}@2x.png`
     );
+    forecastEl.appendChild(weatherIconEl);
 
     //--Displaying temperature for that day--
     var tempEl = document.createElement("span");
     tempEl.classList = "card-body text-center";
     tempEl.textContent = "Temperature: " + dailyForecast.main.temp + " °F";
+    forecastEl.appendChild(tempEl);
 
     //--Displaying wind-speed--
     var windEl = document.createElement("span");
     windEl.classList = "card-body text-center";
     windEl.textContent = "Wind: " + dailyForecast.wind.speed + " MPH";
+    forecastEl.appendChild(windEl);
 
     //--Displaying humidity--
     var humidEl=document.createElement("span");
     humidEl.classList = "card-body text-center";
     humidEl.textContent = "Humidity: " + dailyForecast.main.humidity + "  %";
-
-
-    //--Appending to daily forecast--
-    forecastEl.appendChild(dateEl);
-    forecastEl.appendChild(weatherIconEl);
-    forecastEl.appendChild(tempEl);
-    forecastEl.appendChild(windEl);
     forecastEl.appendChild(humidEl);
 
     //--Appending to main forecast-container--
@@ -151,7 +148,7 @@ var displayForecast = function (weather) {
 var pastSearch = function (pastSearch) {
   var pastSearchEl = document.createElement("button");
   pastSearchEl.textContent = pastSearch;
-  pastSearchEl.classList = "d-flex w-100 btn-light  border p-2";
+  pastSearchEl.classList = "d-flex w-100 bg-indigo-900 text-black border p-2";
   pastSearchEl.setAttribute("data-city", pastSearch);
   pastSearchEl.setAttribute("type", "submit");
 
