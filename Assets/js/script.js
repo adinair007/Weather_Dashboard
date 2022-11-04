@@ -28,7 +28,7 @@ var formSubmission = function (event) {
 
 var cityWeather = function (city) {
   var apiKey = "c93dcbf9d2d3c9f5a47e3578c1193891";
-  var apiURL = `http://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=${apiKey}`;
+  var apiURL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=${apiKey}`;
 
   fetch(apiURL).then(function (response) {
     response.json().then(function (data) {
